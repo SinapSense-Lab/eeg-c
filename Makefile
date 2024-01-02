@@ -1,8 +1,8 @@
 
 CC = g++
 
-LDFLAGS = -g
-CCFLAGS = -g -c
+LDFLAGS = -g -std=c++17
+CCFLAGS = -g -std=c++17 -c
 
 SOURCES = $(wildcard ./source/*.cpp)
 HEADERS = $(wildcard ./source/*.hpp)
@@ -13,7 +13,7 @@ all: $(OBJS)
 	$(CC) $(LDFLAGS) -o bin/eeg-c $^
 	@rm -rf obj/*
 	@echo ' '
-	@./bin/eeg-c
+	@./bin/eeg-c test/raw/ test/output/
 
 ./obj/%.opp: ./source/%.cpp ./source/%.hpp
 	$(CC) $(CCFLAGS) $< -o $@

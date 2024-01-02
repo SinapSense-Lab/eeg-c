@@ -21,13 +21,23 @@
 //  espectrogramas para os dados filtrados e por fim os dados são classificados
 //  utilizando alguns modelos de rede neural.
 //
+#include <string>
 #include <iostream>
 #include <stdexcept>
+#include <filesystem>
+
+#include "parser.hpp"
 
 using namespace std;
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
-    if (argc != 2) { cout << "Invalid arguments: use `eeg-c [data folder] [output folder]`.\n"; return 1; }
-    cout << "Hello World!\0";
+    if (argc != 3) { cout << "Invalid arguments: use `eeg-c [data folder] [output folder]`." << endl; return 1; }
+
+    //  Pega os arquivos dentro da pasta
+    //for (const auto & entry : filesystem::directory_iterator(argv[1]))
+    //    cout << entry.path() << endl;
+
+    RawParse(argv[1]);
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////
