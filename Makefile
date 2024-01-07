@@ -1,8 +1,8 @@
 
 CC = g++
 
-LDFLAGS = -g -std=c++17
-CCFLAGS = -g -std=c++17 -c
+LDFLAGS = -g -std=c++17 -fdeclspec -Wdeprecated-declarations
+CCFLAGS = -g -std=c++17 -c -fdeclspec -Wdeprecated-declarations
 
 SOURCES = $(wildcard ./source/*.cpp)
 HEADERS = $(wildcard ./source/*.hpp)
