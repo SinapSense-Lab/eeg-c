@@ -1,3 +1,4 @@
+/*
 //
 //      NINC JSON Parser (.cpp file)
 //      Por Gabriel Ferreira (versão 1.0)
@@ -12,7 +13,6 @@
 #include <filesystem>
 
 #include "aux.hpp"
-#include "collect.hpp"
 
 using namespace std;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,18 +48,19 @@ struct QTCollect
 struct QTTask
 {
     int id;
-    vector<double> values;
+    vector<float> values;
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-list<Collect> RawParse(const char* rawpath)
+list<QTCollect> GetData(const char* path)
 {
-    //  Pega os arquivos do diretório de dados.
-    list<string> files = GetRawFiles(rawpath);
+    //  Carrega os arquivo de dados.
+    list<string> files = GetRawFiles(path);
 
-    //  Separa os arquivos qualitativos.
+    //  Pega os dados dos arquivos encontrados.
     list<QLSample> ql = GetRawQL(files);
-    //  Separa os arquivo quantitativos.
     list<QTCollect> qt = GetRawQT(files);
+
+    return qt;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 list<QTCollect> GetRawQT(std::list<std::string> files)
@@ -109,7 +110,7 @@ list<QTCollect> GetRawQT(std::list<std::string> files)
             task.id = (i - 14) / 11;
             
             for (auto value = dataSplited.begin(); value != dataSplited.end(); ++value)
-                task.values.push_back(stod(stringReplace(*value, ",", ".")));
+                task.values.push_back(stof(stringReplace(*value, ",", ".")));
 
             collect.tasks.push_back(task);
         }
@@ -205,10 +206,7 @@ list<string> GetRawFiles(const char* path)
         {
             list<string> subfiles = GetRawFiles(path.c_str());
             for (auto file = subfiles.begin(); file != subfiles.end(); ++file)
-            {
                 result.push_back(*file);
-            }
-            continue;
         }
         
         //  Adiciona o diretório na lista.
@@ -217,3 +215,4 @@ list<string> GetRawFiles(const char* path)
 
     return result;
 }
+*/

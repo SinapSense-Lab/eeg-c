@@ -21,23 +21,24 @@
 //  espectrogramas para os dados filtrados e por fim os dados são classificados
 //  utilizando alguns modelos de rede neural.
 //
+#include "structs/ql.hpp"
+#include "structs/qt.hpp"
+
+#include "string.hpp"
+
+#include "load.hpp"
+
+#include <vector>
 #include <string>
 #include <iostream>
-#include <stdexcept>
-#include <filesystem>
 
-#include "parser.hpp"
-
-using namespace std;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
-    if (argc != 3) { cout << "Invalid arguments: use `eeg-c [data folder] [output folder]`." << endl; return 1; }
-
-    //  Pega os arquivos dentro da pasta
-    //for (const auto & entry : filesystem::directory_iterator(argv[1]))
-    //    cout << entry.path() << endl;
-
-    RawParse(argv[1]);
+    if (argc != 3) { std::cout << "Invalid arguments: use `eeg-c [data folder] [output folder]`." << std::endl; return 1; }
+    
+    std::vector<std::string> files = GetFiles(argv[1]);
+    std::vector<QLSample> ql = GetQL(files);
+    std::vector<QTCollect> qt = GetQT(files);
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
