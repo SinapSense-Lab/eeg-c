@@ -21,6 +21,17 @@
 //  espectrogramas para os dados filtrados e por fim os dados são classificados
 //  utilizando alguns modelos de rede neural.
 //
+//  https://github.com/fastlib/fCWT
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  Configurações:
+#define _fs 250
+#define _f0 1.0f
+#define _f1 70.0f
+#define _fn 3000
+#define _nthreads 2
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "structs/ql.hpp"
 #include "structs/qt.hpp"
 
@@ -28,6 +39,8 @@
 
 #include "load.hpp"
 
+#include <math.h>
+#include <fcwt.h>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -40,5 +53,21 @@ int main(int argc, char* argv[])
     std::vector<std::string> files = GetFiles(argv[1]);
     std::vector<QLSample> ql = GetQL(files);
     std::vector<QTCollect> qt = GetQT(files);
+
+    for (auto qtcollect = qt.begin(); qtcollect !=  qt.end(); ++qtcollect)
+    {
+        for (auto task = (*qtcollect).tasks.begin(); task != (*qtcollect).tasks.end(); ++task)
+        {
+            int n = (*task).values.size();
+
+            std::vector<complex<float>> tfm(n * _fn);
+
+            Wavelet *wavelet;
+            Morlet morl()
+
+            break;
+        }
+        break;
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
