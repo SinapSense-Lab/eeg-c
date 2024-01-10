@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
             std::vector<complex<float>> tfm(n * _fn);
 
             Wavelet *wavelet;
-            Morlet morl()
+            Morlet morl();
 
             break;
         }
