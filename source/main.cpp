@@ -26,7 +26,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Configurações:
 #define _fs 250
-#define _f0 1.0f
+#define _f0 6.0f
 #define _f1 70.0f
 #define _fn 3000
 #define _nthreads 2
@@ -48,11 +48,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
+    std::cout << "Teste!" << std::endl;
+    
     if (argc != 3) { std::cout << "Invalid arguments: use `eeg-c [data folder] [output folder]`." << std::endl; return 1; }
     
     std::vector<std::string> files = GetFiles(argv[1]);
     std::vector<QLSample> ql = GetQL(files);
     std::vector<QTCollect> qt = GetQT(files);
+
+    std::cout << "Teste!" << std::endl;
 
     for (auto qtcollect = qt.begin(); qtcollect !=  qt.end(); ++qtcollect)
     {
@@ -62,8 +66,18 @@ int main(int argc, char* argv[])
 
             std::vector<complex<float>> tfm(n * _fn);
 
-            Wavelet *wavelet;
-            Morlet morl();
+            Wavelet* wavelet;
+            Morlet morl(2.0f);
+            wavelet = &morl;
+
+            FCWT fcwt(wavelet, _nthreads, true, false);
+
+            Scales scs(wavelet, FCWT_LINFREQS, _fs, _f0, _f1, _fn);
+
+            fcwt.cwt(&(*task).values[0], n, &tfm[0], &scs);
+
+            for (auto res = tfm.begin(); res != tfm.end(); ++res)
+                std::cout << *res << std::endl;
 
             break;
         }
