@@ -103,5 +103,61 @@ std::vector<complex<float>> denoising(std::vector<float> data, float factor, int
         }
     }
 
+    float sum = 0.0f;
+    for (int i = blocks * windowSize; i < coefficients.size(); i++)
+    {
+        sum += std::abs(coefficients[i]);
+    }
+
+    float mean = sum / coefficients.size();
+    float var = 0.0f;
+
+    for (int i = blocks * windowSize; i < coefficients.size(); i++)
+    {
+        var += std::pow(std::abs(coefficients[i]) - mean, 2);
+    }
+
+    float stdDeviation = std::sqrt(var / coefficients.size());
+    float threshold = stdDeviation * factor;
+
+    for (int i = blocks * windowSize; i < coefficients.size(); i++)
+    {
+        if (std::abs(coefficients[i]) > threshold)
+            {
+                denoise[i] = coefficients[i] - std::polar(threshold, std::arg(coefficients[i]));
+            }
+            else
+            {
+                denoise[i] = 0.0f;
+            }
+    }
+
     return denoise;
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//      Calcula o espectrograma a partir de um conjunto de dados passado como argumento e retorna o
+//  resultado do cálculo do espectrograma.
+//      (vector<float>) data: conjunto de dados passado para a função.
+//      (int) windowSize: tamanho das janelas para o cálculo do espectrograma.
+//      (int) overleap: sobreposições das janelas.
+//      (int) fs = 250 Hz: frequência de coleta de dados, basicamente é o tamanho do dataset divido
+//  pelo intervalo de coleta.
+//      (float) sigma = 2.0f: coeficiente de definição da Wavelet de Morlet.
+//      (float) f0 = 1.0f Hz: frequência inicial para o intervalo de domínio da Wavelet.
+//      (float) f1 = 70.0f Hz: frequência final para o intervalo de domínio da Wavelet.
+//      (int) fn = 3000: quantidade de janelas com as quais a Wavelet vai trabalhar.
+//      (int) nthreads = 1: número de threads que devem ser utilizadas para o cálculo da Wavelet.
+//  Precisa da biblioteca omp.h para funcionar!
+std::vector<std::vector<float>> spectrogram(std::vector<complex<float>> coefficients, int windowSize, int overleap, int fs, float sigma, float f0, float f1, int fn, int nthreads)
+{
+    int signalSize = static_cast<int>(coefficients.size());
+    int hopSize = windowSize - overleap;
+
+    std::vector<std::vector<float>> result;
+
+    for (int i = 0; i > signalSize - windowSize; i += hopSize)
+    {
+
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////

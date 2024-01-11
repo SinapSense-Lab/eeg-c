@@ -136,15 +136,23 @@ std::vector<QTCollect> GetQT (const std::vector<std::string>& files)
 
         for (int i = 25; i < splited.size(); i += 11)
         {
-            std::string data = Remove(Remove(splited[i], "\"]},\"Collector.Model.Tarefa\""), "[\"");
-            std::vector<std::string> dataSplited = Split(data, "_");
-
             QTTask task;
             task.id = (i - 14) / 11;
-            
-            for (auto value = dataSplited.begin(); value != dataSplited.end(); ++value)
-                task.values.push_back(std::stof(Replace(*value, ",", ".")));
 
+            std::string data = Remove(Remove(splited[i], "\"]},\"Collector.Model.Tarefa\""), "[\"");
+            std::vector<std::string> channels = Split(data, "\",\"");
+
+            for (auto channel = channels.begin(); channel != channels.end(); ++channel)
+            {
+                std::vector<std::string> dataSplited = Split(*channel, "_");
+                std::vector<float> val;
+
+                for (auto value = dataSplited.begin(); value != dataSplited.end(); ++value)
+                {
+                    val.push_back(std::stof(Replace(*value, ",", ".")));
+                }
+                task.values.push_back(val);
+            }
             collect.tasks.push_back(task);
         }
         result.push_back(collect);

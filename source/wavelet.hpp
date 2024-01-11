@@ -51,6 +51,8 @@ std::vector<complex<float>> denoising(std::vector<float> data, float factor, int
 //      Calcula o espectrograma a partir de um conjunto de dados passado como argumento e retorna o
 //  resultado do cálculo do espectrograma.
 //      (vector<float>) data: conjunto de dados passado para a função.
+//      (int) windowSize: tamanho das janelas para o cálculo do espectrograma.
+//      (int) overleap: sobreposições das janelas.
 //      (int) fs = 250 Hz: frequência de coleta de dados, basicamente é o tamanho do dataset divido
 //  pelo intervalo de coleta.
 //      (float) sigma = 2.0f: coeficiente de definição da Wavelet de Morlet.
@@ -59,7 +61,7 @@ std::vector<complex<float>> denoising(std::vector<float> data, float factor, int
 //      (int) fn = 3000: quantidade de janelas com as quais a Wavelet vai trabalhar.
 //      (int) nthreads = 1: número de threads que devem ser utilizadas para o cálculo da Wavelet.
 //  Precisa da biblioteca omp.h para funcionar!
-void spectrogram(std::vector<complex<float>> coefficients, int windowSize, int overleap, int numScales, int fs = 250, float sigma = 2.0f, float f0 = 1.0f, float f1 = 70.0f, int fn = 3000, int nthreads = 1);
+std::vector<std::vector<float>> spectrogram(std::vector<complex<float>> coefficients, int windowSize, int overleap, int fs = 250, float sigma = 2.0f, float f0 = 1.0f, float f1 = 70.0f, int fn = 3000, int nthreads = 1);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
  
 #endif

@@ -53,7 +53,14 @@ int main(int argc, char* argv[])
     std::vector<QLSample> ql = GetQL(files);
     std::vector<QTCollect> qt = GetQT(files);
 
-    std::cout << "Tamanho: " << qt[0].tasks[1].values.size() << std::endl;
-    denoising(qt[0].tasks[1].values, 0.2f, 1000);
+    for (int t = 0; t < qt[1].tasks.size(); ++t)
+    {
+        std::cout << "Tarefa " << t << ": ";
+        for (int c = 0; c < qt[1].tasks[t].values.size(); c++)
+        {
+            std::cout << "(c:" << c << ") " << qt[1].tasks[t].values[c].size() << " ";
+        }
+        std::cout << std::endl;
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

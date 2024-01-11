@@ -26,7 +26,7 @@ struct QTTask
     int id;
     int ql;
 
-    std::vector<float> values;
+    std::vector<std::vector<float>> values;
 };
 /////////////////////////////////////////////////////////////////////////////
 //  (int) id: identificação da coleta.
